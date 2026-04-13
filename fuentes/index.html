@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Formulario de basura</title>
+</head>
+<body>
+    <main>
+        <h1>Formulario de basura</h1>
+        <form>
+            <div class="campo">
+                <label for="nombre">Nombre de la basura:</label>
+                <input id="nombre" name="nombre" type="text" placeholder="Ej. cable, tapa, trozo" required />
+            </div>
+            <div class="campo">
+                <label for="colorBasura">Color de la basura:</label>
+                <input id="colorBasura" name="colorBasura" type="text" placeholder="Ej. rojo, verde, gris" required />
+            </div>
+            <div class="campo">
+                <label for="pesoBasura">Peso de la basura (kg):</label>
+                <input id="pesoBasura" name="pesoBasura" type="number" min="0" step="0.01" placeholder="0.00" required />
+            </div>
+            <div class="campo">
+                <label for="material">Material o tipo:</label>
+                <select id="material" name="material" required>
+                    <option value="">Elige un material</option>
+                    <option value="oro">Oro</option>
+                    <option value="plata">Plata</option>
+                    <option value="cobre">Cobre</option>
+                    <option value="aluminio">Aluminio</option>
+                    <option value="hierro">Hierro</option>
+                    <option value="plastico">Plástico</option>
+                    <option value="vidrio">Vidrio</option>
+                    <option value="papel">Papel</option>
+                </select>
+            </div>
+            <button type="submit">Enviar</button>
+        </form>
+    </main>
+</body>
+</html>
+
+
+
