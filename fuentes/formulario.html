@@ -35,11 +35,27 @@
                     <option value="papel">Papel</option>
                 </select>
             </div>
+            <div class="campo">
+                <label for="descripcion">Descripción:</label>
+                <textarea id="descripcion" name="descripcion" rows="4" placeholder="Describe el estado o detalles" required></textarea>
+            </div>
+            <div class="campo">
+                <label>Estado:</label>
+                <label><input type="radio" name="estado" value="nuevo" required /> Nuevo</label>
+                <label><input type="radio" name="estado" value="usado" /> Usado</label>
+                <label><input type="radio" name="estado" value="rotura" /> Roto</label>
+            </div>
+            <div class="campo">
+                <label><input id="reciclable" name="reciclable" type="checkbox" /> Reciclable</label>
+            </div>
+            <div class="campo">
+                <label for="fecha">Fecha de recogida:</label>
+                <input id="fecha" name="fecha" type="date" required />
+            </div>
+
+            <input type="hidden" name="origen" value="formulario-basura" />
             <button type="submit">Enviar</button>
         </form>
     </main>
 </body>
 </html>
-
-
-
