@@ -1,0 +1,111 @@
+/* Estilos básicos para el CRUD de Basura - ODS 13 */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: #f5f5f5;
+}
+
+nav {
+    background-color: #2e7d32;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.nav-brand {
+    color: white;
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 8px 16px;
+    border-radius: 4px;
+}
+
+.nav-links button:hover {
+    background-color: #1b5e20;
+}
+
+/* Clase para ocultar vistas */
+.vista-oculta {
+    display: none !important;
+}
+
+/* Estilos para tablas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    margin-top: 10px;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #4caf50;
+    color: white;
+}
+
+/* Estilos para formularios */
+.campo {
+    margin-bottom: 15px;
+}
+
+label {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+input, select, textarea {
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    padding: 8px 16px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+button.eliminar {
+    background-color: #f44336;
+}
+
+button.editar {
+    background-color: #ff9800;
+    color: black;
+}
+
+#mensaje {
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 4px;
+    background-color: #fff9c4;
+}
