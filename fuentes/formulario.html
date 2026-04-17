@@ -8,8 +8,8 @@
 <body>
     <main>
         <h1>Formulario de basura</h1>
-        <a href="menu.html">← Volver al menú</a>
-
+        <a href="index.html">← Volver al menú</a>
+ 
         <form id="form-basura">
             <div class="campo">
                 <label for="nombre">Nombre de la basura:</label>
@@ -54,11 +54,12 @@
                 <label for="fecha">Fecha de recogida:</label>
                 <input id="fecha" name="fecha" type="date" required />
             </div>
-
+ 
             <input type="hidden" name="origen" value="formulario-basura" />
             <button type="submit">Enviar</button>
         </form>
     </main>
-    <script src="basura.js"></script>
+    <script src="basura.js" type="module"></script>
 </body>
 </html>
+ 
