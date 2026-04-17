@@ -1,30 +1,19 @@
-// ----- CONSTANTES Y VARIABLES GLOBALES -----
-const STORAGE_KEY = 'basuras_ods13';  // Clave para localStorage
-let basuras = [];                     // Array con los objetos Basura
+// ----- VARIABLES GLOBALES -----
+let basuras = [];  // Array en memoria (sin localStorage)
 
-// ----- FUNCIONES DE ALMACENAMIENTO -----
-function cargarBasuras() {
-    const datosGuardados = localStorage.getItem(STORAGE_KEY);
-    if (datosGuardados) {
-        const objetosPlanos = JSON.parse(datosGuardados);
-        // Convertir cada objeto plano a instancia de Basura
-        basuras = objetosPlanos.map(obj => new Basura(
-            obj.id, obj.nombre, obj.color, obj.peso, obj.material,
-            obj.descripcion, obj.estado, obj.reciclable, obj.fecha
-        ));
-    } else {
-        basuras = [];
-    }
-}
-
-function guardarBasuras() {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(basuras));
+// ----- DATOS DE EJEMPLO (opcional, para que la tabla no esté vacía al inicio) -----
+function cargarDatosEjemplo() {
+    basuras = [
+        new Basura(null, 'Botella plástico', 'transparente', 0.03, 'plastico', 'Botella de agua', 'usado', true, '2026-04-15'),
+        new Basura(null, 'Lata aluminio', 'plateado', 0.015, 'aluminio', 'Lata de refresco', 'usado', true, '2026-04-14'),
+        new Basura(null, 'Bolsa papel', 'marrón', 0.005, 'papel', 'Bolsa de supermercado', 'usado', true, '2026-04-13')
+    ];
 }
 
 // ----- RENDERIZAR TABLA -----
 function renderizarTabla(listaAMostrar) {
     const tbody = document.getElementById('lista-body');
-    tbody.innerHTML = '';  // Limpiar tabla
+    tbody.innerHTML = '';
 
     if (listaAMostrar.length === 0) {
         tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;">No hay residuos registrados</td></tr>';
@@ -51,7 +40,6 @@ function renderizarTabla(listaAMostrar) {
         tbody.appendChild(fila);
     });
 
-    // Asignar eventos a botones de editar y eliminar
     document.querySelectorAll('.editar').forEach(btn => {
         btn.addEventListener('click', function() {
             editarBasura(this.dataset.id);
@@ -64,7 +52,7 @@ function renderizarTabla(listaAMostrar) {
     });
 }
 
-// ----- CONTROL DE VISTAS (LISTADO / FORMULARIO) -----
+// ----- CONTROL DE VISTAS -----
 const vistaListado = document.getElementById('vistaListado');
 const vistaFormulario = document.getElementById('vistaFormulario');
 
@@ -102,9 +90,9 @@ function mostrarFormulario(modoEdicion = false, id = null) {
     }
 }
 
-// ----- OPERACIONES CRUD -----
+// ----- CRUD -----
 function guardarResiduo(evento) {
-    evento.preventDefault();  // Evitar recarga de página
+    evento.preventDefault();
 
     const id = document.getElementById('basuraId').value;
     const nombre = document.getElementById('nombre').value;
@@ -117,20 +105,17 @@ function guardarResiduo(evento) {
     const fecha = document.getElementById('fecha').value;
 
     if (id) {
-        // Editar existente
         const indice = basuras.findIndex(b => b.id === id);
         if (indice !== -1) {
             basuras[indice] = new Basura(id, nombre, color, peso, material, descripcion, estado, reciclable, fecha);
         }
         mostrarMensaje('Residuo actualizado ✅', 'ok');
     } else {
-        // Crear nuevo
         const nuevaBasura = new Basura(null, nombre, color, peso, material, descripcion, estado, reciclable, fecha);
         basuras.push(nuevaBasura);
         mostrarMensaje('Residuo añadido ✅', 'ok');
     }
 
-    guardarBasuras();
     mostrarListado();
 }
 
@@ -141,13 +126,12 @@ function editarBasura(id) {
 function eliminarBasura(id) {
     if (confirm('¿Seguro que quieres eliminar este residuo?')) {
         basuras = basuras.filter(b => b.id !== id);
-        guardarBasuras();
         renderizarTabla(basuras);
         mostrarMensaje('Residuo eliminado 🗑️', 'ok');
     }
 }
 
-// ----- FILTRO DE BÚSQUEDA -----
+// ----- FILTRO -----
 function filtrarTabla() {
     const texto = document.getElementById('filtroNombre').value.toLowerCase();
     const filtradas = basuras.filter(b => b.nombre.toLowerCase().includes(texto));
@@ -159,7 +143,7 @@ function limpiarFiltro() {
     renderizarTabla(basuras);
 }
 
-// ----- MENSAJES TEMPORALES -----
+// ----- MENSAJES -----
 function mostrarMensaje(texto, tipo) {
     const mensajeDiv = document.getElementById('mensaje');
     mensajeDiv.textContent = texto;
@@ -170,20 +154,17 @@ function mostrarMensaje(texto, tipo) {
     setTimeout(() => mensajeDiv.textContent = '', 3000);
 }
 
-// ----- INICIALIZACIÓN AL CARGAR LA PÁGINA -----
+// ----- INICIALIZACIÓN -----
 document.addEventListener('DOMContentLoaded', function() {
-    cargarBasuras();
+    cargarDatosEjemplo();  // Quita esta línea si prefieres empezar con tabla vacía
     mostrarListado();
 
-    // Eventos de menú
     document.getElementById('btnMostrarLista').addEventListener('click', mostrarListado);
     document.getElementById('btnMostrarFormulario').addEventListener('click', () => mostrarFormulario(false));
     document.getElementById('btnCancelar').addEventListener('click', mostrarListado);
 
-    // Evento submit del formulario
     document.getElementById('form-basura').addEventListener('submit', guardarResiduo);
 
-    // Eventos de filtro
     document.getElementById('btnFiltrar').addEventListener('click', filtrarTabla);
     document.getElementById('btnLimpiarFiltro').addEventListener('click', limpiarFiltro);
 });
