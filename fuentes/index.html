@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD Basura · ODS 13</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav>
+    <div class="nav-brand">crud<span>.app</span></div>
+    <ul class="nav-links">
+        <li><button id="btnMostrarLista">☰ Lista de basura</button></li>
+        <li><button id="btnMostrarFormulario">✚ Nuevo residuo</button></li>
+    </ul>
+</nav>
+
+<div id="vistaListado">
+    <main>
+        <h1>Lista de basura</h1>
+        <div>
+            <input type="text" id="filtroNombre" placeholder="Buscar por nombre...">
+            <button id="btnFiltrar">🔍 Filtrar</button>
+            <button id="btnLimpiarFiltro">🧹 Limpiar</button>
+        </div>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Color</th>
+                    <th>Peso (kg)</th>
+                    <th>Descripción</th>
+                    <th>Material</th>
+                    <th>Estado</th>
+                    <th>Reciclable</th>
+                    <th>Fecha</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="lista-body"></tbody>
+        </table>
+    </main>
+</div>
+
+<div id="vistaFormulario" class="vista-oculta">
+    <main>
+        <h1 id="tituloFormulario">Formulario de basura (Nuevo)</h1>
+        <form id="form-basura">
+            <input type="hidden" id="basuraId" name="id" value="">
+
+            <div class="campo">
+                <label for="nombre">Nombre de la basura:</label>
+                <input id="nombre" name="nombre" type="text" placeholder="Ej. cable, tapa, trozo" required>
+            </div>
+            <div class="campo">
+                <label for="colorBasura">Color de la basura:</label>
+                <input id="colorBasura" name="colorBasura" type="text" placeholder="Ej. rojo, verde, gris" required>
+            </div>
+            <div class="campo">
+                <label for="pesoBasura">Peso de la basura (kg):</label>
+                <input id="pesoBasura" name="pesoBasura" type="number" min="0" step="0.01" placeholder="0.00" required>
+            </div>
+            <div class="campo">
+                <label for="material">Material o tipo:</label>
+                <select id="material" name="material" required>
+                    <option value="">Elige un material</option>
+                    <option value="oro">Oro</option>
+                    <option value="plata">Plata</option>
+                    <option value="cobre">Cobre</option>
+                    <option value="aluminio">Aluminio</option>
+                    <option value="hierro">Hierro</option>
+                    <option value="plastico">Plástico</option>
+                    <option value="vidrio">Vidrio</option>
+                    <option value="papel">Papel</option>
+                </select>
+            </div>
+            <div class="campo">
+                <label for="descripcion">Descripción:</label>
+                <textarea id="descripcion" name="descripcion" rows="4" placeholder="Describe el estado o detalles" required></textarea>
+            </div>
+            <div class="campo">
+                <label>Estado:</label>
+                <label><input type="radio" name="estado" value="nuevo" required> Nuevo</label>
+                <label><input type="radio" name="estado" value="usado"> Usado</label>
+                <label><input type="radio" name="estado" value="rotura"> Roto</label>
+            </div>
+            <div class="campo">
+                <label><input id="reciclable" name="reciclable" type="checkbox"> Reciclable ♻️</label>
+            </div>
+            <div class="campo">
+                <label for="fecha">Fecha de recogida:</label>
+                <input id="fecha" name="fecha" type="date" required>
+            </div>
+            <input type="hidden" name="origen" value="formulario-basura">
+            <button type="submit">💾 Guardar</button>
+            <button type="button" id="btnCancelar">❌ Cancelar</button>
+        </form>
+    </main>
+</div>
+
+<div id="mensaje"></div>
+
+<script src="js/modelos/basura.js"></script>
+<script src="js/controladores/controladorBasura.js"></script>
+<script src="js/vistas/vistaBasura.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
