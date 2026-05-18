@@ -109,17 +109,4 @@
 
 ---
 
-# 📦 Entrega Final
-
-| # | Tarea | Responsable | Estado |
-|---|---|---|---|
-| 47 | Probar CRUD completo | Todos | ✅ |
-| 48 | Probar juego gráfico | Todos | ✅ |
-| 49 | Subir cambios a ramas personales | Adrián | ✅ |
-| 50 | Realizar merge a `main` | Jesús | 🔄 |
-| 51 | Generar ZIP final del proyecto | Lorena | ⏳ |
-| 52 | Entregar repositorio y ZIP | Adrián | ⏳ |
-
----
-
 *Última actualización: Mayo 2026*
