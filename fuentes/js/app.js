@@ -1,5 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const controlador = new ControladorBasura();
-    const vista = new VistaBasura(controlador);
-    vista.mostrarListado();
+    const controladorBasura = new ControladorBasura();
+    const controladorJuego = new ControladorJuego(controladorBasura);
+
+    const vistaBasura = new VistaBasura(controladorBasura);
+    const vistaJuego = new VistaJuego(controladorJuego);
+
+    vistaBasura.mostrarListado();
 });
+
