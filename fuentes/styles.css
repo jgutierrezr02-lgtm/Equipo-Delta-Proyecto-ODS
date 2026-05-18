@@ -229,3 +229,62 @@ button.editar {
     align-items: center;
     margin-bottom: 12px;
 }
+
+/* ===== VISTA JUEGO MÁS CENTRADA Y BONITA ===== */
+
+#vista-juego {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+
+#vista-juego h1,
+#vista-juego h2,
+#vista-juego p {
+    text-align: center;
+}
+
+.panel-juego {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin: 15px auto;
+}
+
+.tablero-juego {
+    width: 760px;
+    max-width: 100%;
+    min-height: 360px;
+    margin: 20px auto;
+}
+
+.contenedores-juego {
+    display: grid;
+    grid-template-columns: repeat(4, 140px);
+    justify-content: center;
+    gap: 14px;
+    margin: 20px auto;
+    max-width: 650px;
+}
+
+.zona-contenedor {
+    min-width: auto;
+    padding: 14px;
+    border-radius: 12px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.zona-contenedor:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.22);
+}
+
+@media (max-width: 700px) {
+    .contenedores-juego {
+        grid-template-columns: repeat(2, 140px);
+    }
+}
