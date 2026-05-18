@@ -282,3 +282,4 @@ class VistaJuego {
             `Juego terminado. Has conseguido ${estadisticas.puntos} puntos con ${estadisticas.aciertos} aciertos y ${estadisticas.fallos} fallos.`;
     }
 }
+
