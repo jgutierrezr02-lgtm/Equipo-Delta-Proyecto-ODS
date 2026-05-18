@@ -4,12 +4,16 @@ class VistaBasura {
 
         this.vistaListado = document.getElementById('vistaListado');
         this.vistaFormulario = document.getElementById('vistaFormulario');
+        this.vistaJuego = document.getElementById('vistaJuego');
+        this.vistaInstrucciones = document.getElementById('vistaInstrucciones');
+        this.vistaEstadisticas = document.getElementById('vistaEstadisticas');
+        this.vistaODS = document.getElementById('vistaODS');
+        this.estadisticasCrud = document.getElementById('estadisticasCrud');
         this.tituloFormulario = document.getElementById('tituloFormulario');
         this.formulario = document.getElementById('form-basura');
         this.inputId = document.getElementById('basuraId');
         this.inputNombre = document.getElementById('nombre');
         this.inputColor = document.getElementById('colorBasura');
-        this.inputPeso = document.getElementById('pesoBasura');
         this.selectMaterial = document.getElementById('material');
         this.textareaDesc = document.getElementById('descripcion');
         this.radioEstado = document.getElementsByName('estado');
@@ -17,6 +21,9 @@ class VistaBasura {
         this.inputFecha = document.getElementById('fecha');
         this.tbody = document.getElementById('lista-body');
         this.filtroNombre = document.getElementById('filtroNombre');
+        this.filtroMaterial = document.getElementById('filtroMaterial');
+        this.filtroEstado = document.getElementById('filtroEstado');
+        this.filtroReciclable = document.getElementById('filtroReciclable');
         this.mensajeDiv = document.getElementById('mensaje');
 
         this.configurarEventos();
@@ -25,21 +32,48 @@ class VistaBasura {
     configurarEventos() {
         document.getElementById('btnMostrarLista').addEventListener('click', () => this.mostrarListado());
         document.getElementById('btnMostrarFormulario').addEventListener('click', () => this.mostrarFormulario());
+        document.getElementById('btnMostrarJuego').addEventListener('click', () => this.mostrarVista(this.vistaJuego));
+        document.getElementById('btnMostrarInstrucciones').addEventListener('click', () => this.mostrarVista(this.vistaInstrucciones));
+        document.getElementById('btnMostrarEstadisticas').addEventListener('click', () => this.mostrarEstadisticas());
+        document.getElementById('btnMostrarODS').addEventListener('click', () => this.mostrarVista(this.vistaODS));
         document.getElementById('btnCancelar').addEventListener('click', () => this.mostrarListado());
         this.formulario.addEventListener('submit', (e) => this.guardarResiduo(e));
         document.getElementById('btnFiltrar').addEventListener('click', () => this.filtrar());
         document.getElementById('btnLimpiarFiltro').addEventListener('click', () => this.limpiarFiltro());
     }
 
-    mostrarListado() {
-        this.vistaListado.classList.remove('vista-oculta');
+    ocultarVistas() {
+        this.vistaListado.classList.add('vista-oculta');
         this.vistaFormulario.classList.add('vista-oculta');
+        this.vistaJuego.classList.add('vista-oculta');
+        this.vistaInstrucciones.classList.add('vista-oculta');
+        this.vistaEstadisticas.classList.add('vista-oculta');
+        this.vistaODS.classList.add('vista-oculta');
+    }
+
+    mostrarVista(vista) {
+        this.ocultarVistas();
+        vista.classList.remove('vista-oculta');
+    }
+
+    mostrarListado() {
+        this.mostrarVista(this.vistaListado);
         this.renderizarTabla(this.controlador.obtenerTodas());
     }
 
+    mostrarEstadisticas() {
+        const basuras = this.controlador.obtenerTodas();
+        const reciclables = basuras.filter(b => b.reciclable).length;
+        const materiales = basuras.map(basura => basura.material).join(', ');
+
+        this.estadisticasCrud.textContent =
+            `Hay ${basuras.length} residuos registrados y ${reciclables} reciclables. Materiales registrados: ${materiales || 'ninguno'}.`;
+
+        this.mostrarVista(this.vistaEstadisticas);
+    }
+
     mostrarFormulario(modoEdicion = false, id = null) {
-        this.vistaListado.classList.add('vista-oculta');
-        this.vistaFormulario.classList.remove('vista-oculta');
+        this.mostrarVista(this.vistaFormulario);
         this.formulario.reset();
 
         if (modoEdicion) {
@@ -49,7 +83,6 @@ class VistaBasura {
             if (basura) {
                 this.inputNombre.value = basura.nombre;
                 this.inputColor.value = basura.color;
-                this.inputPeso.value = basura.peso;
                 this.selectMaterial.value = basura.material;
                 this.textareaDesc.value = basura.descripcion;
                 this.radioEstado.forEach(r => r.checked = r.value === basura.estado);
@@ -94,7 +127,7 @@ class VistaBasura {
         this.tbody.innerHTML = '';
 
         if (lista.length === 0) {
-            this.tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;">No hay residuos registrados</td></tr>';
+            this.tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;">No hay residuos registrados</td></tr>';
             return;
         }
 
@@ -104,7 +137,6 @@ class VistaBasura {
                 <td>${basura.id.slice(0, 8)}...</td>
                 <td>${basura.nombre}</td>
                 <td>${basura.color}</td>
-                <td>${basura.peso.toFixed(2)} kg</td>
                 <td>${basura.descripcion}</td>
                 <td>${basura.material}</td>
                 <td>${basura.estado}</td>
@@ -128,12 +160,18 @@ class VistaBasura {
 
     filtrar() {
         const texto = this.filtroNombre.value;
-        const filtradas = this.controlador.filtrarPorNombre(texto);
+        const material = this.filtroMaterial.value;
+        const estado = this.filtroEstado.value;
+        const soloReciclables = this.filtroReciclable.checked;
+        const filtradas = this.controlador.filtrarAvanzado(texto, material, estado, soloReciclables);
         this.renderizarTabla(filtradas);
     }
 
     limpiarFiltro() {
         this.filtroNombre.value = '';
+        this.filtroMaterial.value = '';
+        this.filtroEstado.value = '';
+        this.filtroReciclable.checked = false;
         this.renderizarTabla(this.controlador.obtenerTodas());
     }
 
